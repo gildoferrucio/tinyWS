@@ -1,6 +1,7 @@
 node "default" {
   file { "/usr/local/bin/weatherForecastControlAssembled.sh":
     #TODO: check for appropriate source parameter filling
+    #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
     source  => "puppet://$servername/",
     path    => "/usr/local/bin/weatherForecastControlAssembled.sh",
     mode    => "0744",
@@ -11,6 +12,7 @@ node "default" {
 
   file { "/usr/local/bin/forecastLogHandler.sh":
     #TODO: check for appropriate source parameter filling
+    #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
     source  => ,
     path    => "/usr/local/bin/forecastLogHandler.sh",
     mode    => "0744",
