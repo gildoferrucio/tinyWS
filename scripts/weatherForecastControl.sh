@@ -48,13 +48,6 @@ function arrayLength(){
 	echo ${#array[@]}
 }
 
-function doesFileExists(){
-	local file
-	file="$1"
-
-	[ -f "$file" ] && return 0 || return 1
-}
-
 function doesDirectoryExists(){
 	local directory
 	directory="$1"
@@ -99,7 +92,7 @@ ACTION="$1"
 case "$ACTION" in
   start)
     if ! isProcessRunning "$SCRIPT_NAME"; then
-      ! doesFileExists "$SCRIPT_PATH"/"$SCRIPT_NAME" && generateWeatherForecastScriptFile
+      generateWeatherForecastScriptFile
       nohup "$SCRIPT_PATH"/"$SCRIPT_NAME" --output="$OUTPUT" --city="$CITY" --periodic &
     fi
     ;;
