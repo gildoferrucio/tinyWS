@@ -121,6 +121,7 @@ case "$ACTION" in
   stop)
     if isProcessRunning "$SCRIPT_NAME"; then
       killProcessByPID $(getProcessPIDs "$SCRIPT_NAME")
+			rm -rf "$SCRIPT_PATH"/"$SCRIPT_NAME"
     fi
     ;;
   status)
