@@ -1,34 +1,35 @@
-node "default" {
-  file { "/usr/local/bin/weatherForecastControlAssembled.sh":
+node default {
+  file { "weatherForecastControlAssembled.sh":
     #TODO: check for appropriate source parameter filling
     #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
-    source  => "puppet://$servername/",
+    # I've choose to use a new mount point and configure it in /etc/puppetlabs/puppet/fileserver.conf, as described in https://puppet.com/docs/puppet/7.3/file_serving.html#creating-a-new-mount-point-in-fileserver.conf
+    source  => "puppet:///tinyWS/weatherForecastControlAssembled.sh",
     path    => "/usr/local/bin/weatherForecastControlAssembled.sh",
     mode    => "0744",
-    owner   => "root"
-    group   => "root"
+    owner   => "root",
+    group   => "root",
     replace => true,
   }
-
-  file { "/usr/local/bin/forecastLogHandler.sh":
+  file { "forecastLogHandler.sh":
     #TODO: check for appropriate source parameter filling
     #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
-    source  => ,
+    # I've choose to use a new mount point and configure it in /etc/puppetlabs/puppetlabs/fileserver.conf, as described in https://puppet.com/docs/puppet/7.3/file_serving.html#creating-a-new-mount-point-in-fileserver.conf
+    source  => "puppet:///tinyWS/forecastLogHandler.sh",
     path    => "/usr/local/bin/forecastLogHandler.sh",
     mode    => "0744",
     owner   => "root",
     group   => "root",
     replace => true,
   }
-
   service { "weatherForecastService":
+    require => File["weatherForecastControlAssembled.sh"],
     ensure  => running,
     start   => "/usr/local/bin/weatherForecastControlAssembled.sh start",
     stop    => "/usr/local/bin/weatherForecastControlAssembled stop",
     status  => "/usr/local/bin/weatherForecastControlAssembled status",
   }
-
   cron { "forecastLogHandlerCron":
+    require => File["forecastLogHandler.sh"],
     ensure  => present,
     command => "/usr/local/bin/forecastLogHandler.sh --inputPath=/opt/weatherForecast",
     user    => "root",
