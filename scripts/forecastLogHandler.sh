@@ -203,7 +203,7 @@ function compressYesterdayFiles(){
   #TODO: check the value of destinyPath
   compressTARGZ "$INPUT_PATH"/"$yesterday" --destinyPath="$COMPRESSED_FILES_BASE_PATH"
   #Removes yesterday directory (according to shellcheck, when using "rm" it's safer to use "$var:?" to make sure that $var will never expand only to "/", the root directory and wipe the whole system)
-  rm -rf "$INPUT_PATH:?"/"$yesterday"
+  rm -rf "$INPUT_PATH"/"$yesterday"
   changeFilePermissions "$COMPRESSED_FILES_BASE_PATH"/*.tar.gz "400"
 }
 
