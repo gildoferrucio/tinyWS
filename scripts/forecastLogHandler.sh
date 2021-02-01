@@ -193,7 +193,7 @@ function getPreviousDateBasedOnDeltaDays(){
 
 function compressYesterdayFiles(){
   local yesterday
-  yesterday=$(getPreviousDateBasedOnDeltaDays)
+  yesterday=$(getPreviousDateBasedOnDeltaDays 1)
 
   #Creates temp yesterday directory
   mkdir -p "$INPUT_PATH"/"$yesterday"
