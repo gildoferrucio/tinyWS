@@ -106,14 +106,15 @@ doesGivenArgumentExists "\-\-periodic" "$@" && IS_PERIODIC=true || IS_PERIODIC=f
 
 if ! isVariableBlank "$OUTPUT"  && ! isVariableBlank "$CITY"; then
   ! doesDirectoryExists "$OUTPUT" && mkdir -p "$OUTPUT"
-  FILENAME=forecast_$(echo "$CITY" | sed -s "s/ //g")_$(hostname)_$(getCurrentTimestamp)
 
   if $IS_PERIODIC; then
     while true; do
+      FILENAME=forecast_$(echo "$CITY" | sed -s "s/ //g")_$(hostname)_$(getCurrentTimestamp)
       getWeatherGraphFromCity "$CITY" > "$OUTPUT"/"$FILENAME"
       sleep $PERIOD_SECS
     done
   else
+    FILENAME=forecast_$(echo "$CITY" | sed -s "s/ //g")_$(hostname)_$(getCurrentTimestamp)
     getWeatherGraphFromCity "$CITY" > "$OUTPUT"/"$FILENAME"
   fi
 else
