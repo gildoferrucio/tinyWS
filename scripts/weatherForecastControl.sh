@@ -54,6 +54,26 @@ function doesDirectoryExists(){
 
 	[ -d "$directory" ] && return 0 || return 1
 }
+
+function doesFileExists(){
+  local file
+  file="$1"
+
+  [ -f "$file" ] && return 0 || return 1
+}
+
+function changeFilePermissions(){
+  local file
+  local permission
+  file="$1"
+  permission="$2"
+
+  if doesFileExists "$file"; then
+    chmod "$permission" "$file"
+  elif doesDirectoryExists "$file"; then
+    chmod -R "$permission" "$file"
+  fi
+}
 ###################################FUNCTIONS####################################
 function generateWeatherForecastScriptFile(){
   ! doesDirectoryExists "$SCRIPT_PATH" && mkdir -p "$SCRIPT_PATH"
@@ -61,6 +81,8 @@ function generateWeatherForecastScriptFile(){
   cat << 'EOF' > "$SCRIPT_PATH"/"$SCRIPT_NAME"
 HERE GOES THE SCRIPT
 EOF
+
+	changeFilePermissions "$SCRIPT_PATH"/"$SCRIPT_NAME" "+x"
 }
 
 function printHelp(){
@@ -83,7 +105,7 @@ function printHelp(){
 ###################################CONSTANTS####################################
 SCRIPT_PATH="/tmp"
 SCRIPT_NAME="grabWeatherForecast.sh"
-OUTPUT="/tmp"
+OUTPUT="/opt/weatherForecast"
 CITY="João Pessoa"
 
 ######################################MAIN######################################
