@@ -1,7 +1,5 @@
 node default {
   file { "weatherForecastControlAssembled.sh":
-    #TODO: check for appropriate source parameter filling
-    #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
     # I've choose to use a new mount point and configure it in /etc/puppetlabs/puppet/fileserver.conf, as described in https://puppet.com/docs/puppet/7.3/file_serving.html#creating-a-new-mount-point-in-fileserver.conf
     source  => "puppet:///tinyWS/weatherForecastControlAssembled.sh",
     path    => "/usr/local/bin/weatherForecastControlAssembled.sh",
@@ -13,8 +11,6 @@ node default {
     notify  => Service["weatherForecastService"],
   }
   file { "forecastLogHandler.sh":
-    #TODO: check for appropriate source parameter filling
-    #      check: https://stackoverflow.com/questions/35429068/how-to-install-and-run-a-script-in-puppet
     # I've choose to use a new mount point and configure it in /etc/puppetlabs/puppet/fileserver.conf, as described in https://puppet.com/docs/puppet/7.3/file_serving.html#creating-a-new-mount-point-in-fileserver.conf
     source  => "puppet:///tinyWS/forecastLogHandler.sh",
     path    => "/usr/local/bin/forecastLogHandler.sh",
