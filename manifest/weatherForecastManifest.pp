@@ -7,7 +7,6 @@ node default {
     owner   => "root",
     group   => "root",
     replace => true,
-    #TODO: check if notify is working as it should
     notify  => Service["weatherForecastService"],
   }
   file { "forecastLogHandler.sh":
