@@ -200,7 +200,6 @@ function compressYesterdayFiles(){
   #Moves yesterday forecasts to yesterday directory
   mv -vf "$INPUT_PATH"/forecast_*"$yesterday"* "$INPUT_PATH"/"$yesterday"
   #Compress the files
-  #TODO: check the value of destinyPath
   compressTARGZ "$INPUT_PATH"/"$yesterday" --destinyPath="$COMPRESSED_FILES_BASE_PATH"
   #Removes yesterday directory (according to shellcheck, when using "rm" it's safer to use "$var:?" to make sure that $var will never expand only to "/", the root directory and wipe the whole system)
   rm -rf "$INPUT_PATH"/"$yesterday"
