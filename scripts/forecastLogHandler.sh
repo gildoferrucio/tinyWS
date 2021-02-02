@@ -17,9 +17,9 @@ function compressTARGZ(){
 	if ! isVariableBlank "$destinyPath"; then
     ! doesDirectoryExists "$destinyPath" && mkdir -p "$destinyPath"
 		if doesFileExists "$file"; then
-			outputFile="$destinyPath"$(getFilename "$file").tar.gz
+			outputFile="$destinyPath"/$(getFilename "$file").tar.gz
 		elif doesDirectoryExists "$file"; then
-			outputFile="$destinyPath"$(getDirectoryName "$file").tar.gz
+			outputFile="$destinyPath"/$(getDirectoryName "$file").tar.gz
 		fi
 	else
 		if doesFileExists "$file" || doesDirectoryExists "$file"; then
@@ -215,7 +215,7 @@ function removeOldBackups(){
 
   for n in $(seq 0 9); do
     dayToMaintain=$(date --date="$(getPreviousDateBasedOnDeltaDays $n)" +%m-%d)
-    directoryToMaintain=$(ls /backup/ | grep "$dayToMaintain"* | head -n 1)
+    directoryToMaintain=$(ls /backup/ | grep "^$dayToMaintain-"* | head -n 1)
     directoriesToRemove=($(removeGivenElement "$directoryToMaintain" "${directoriesToRemove[@]}"))
   done
 
